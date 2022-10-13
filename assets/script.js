@@ -4,7 +4,7 @@ var mainEl = document.querySelector("main");
 var titleArea = document.querySelector("#title-area");
 var sectionAreaEl = document.querySelector("#section-area");
 var instructionEl = document.querySelector("#instructions");
-var startEl = document.querySelector("#start-button");
+var startEl = document.querySelector("#start-btn");
 
 // store questions, answers and correct answers in an array
 var quizQuestions = [
@@ -16,7 +16,7 @@ var quizQuestions = [
             "js",
             "scripting"
         ],
-        correctAnswer: "<script>"
+        correctAnswer: "script"
     },
     {
         question: "What is the correct JavaScript syntax to change the content of the HTML element: <p id=demo>This is a demonstration.</p>",
