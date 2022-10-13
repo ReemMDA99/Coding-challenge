@@ -1,34 +1,12 @@
-// Declare Variables
-var timerEl = document.querySelector("#countdown");
+var timerEl = document.querySelector("#countdown")
 var mainEl = document.querySelector("main");
 var titleArea = document.querySelector("#title-area");
 var sectionAreaEl = document.querySelector("#section-area");
-var instructionEl = document.querySelector("#instructions");
-var startEl = document.querySelector("#start-button");
+var instructionEl = document.querySelector("#instruction");
+var startEl = document.querySelector("#start-btn");
 
-// store questions, answers and correct answers in an array
+// store questions, answers, and correct answer in an array 
 var quizQuestions = [
-    {
-        question: "Inside which HTML element do we put the JavaScript?",
-        answers: [ 
-            "javascript",
-            "script",
-            "js",
-            "scripting"
-        ],
-        correctAnswer: "<script>"
-    },
-    {
-        question: "What is the correct JavaScript syntax to change the content of the HTML element: <p id=demo>This is a demonstration.</p>",
-        
-        answers: [ 
-            "document.getElementById(demo).innerHTML=hello world!",
-            "document.getElement(demo).innerHTML=hello world!",
-            "document.getElement(demo)=hello world!",
-            "document.querySelector=hello world!"
-        ],
-        correctAnswer: "document.getElementById(demo).innerHTML=hello world!"
-    },
     {
         question: "Commonly used data types DO Not Include:",
         answers: [
@@ -82,40 +60,37 @@ var quizQuestions = [
 ];
 
 var timeLeft = 75;
-var timeInterval= "";
+var timeInterval = "";
 var questionNo = 0;
 var scoreList = [];
 
-// starts countdown when the quiz starts (triggered by startQuiz()
-var countdown = () => {
+// starts countdown when the quiz starts (triggered by startQuiz())
+var countdown = function() {
     timeInterval = setInterval(function() {
         // if high score is viewed, stop the timer or else continue timer
-        if(titleArea.textContent === "High scores") {
+        if (titleArea.textContent === "High scores") {
             clearInterval(timeInterval);
-
         } else if (timeLeft >= 1) {
-            timerEl.innerHTML = "time" + timeLeft;
+            timerEl.innerHTML = "Time: " + timeLeft;
             timeLeft--;
-
         } else {
             finishQuiz();
         }
     }, 1000);
-    countdown();
 }
 
 // starts the quiz when start button is clicked or executed by nextQuestionHandler();
-
-var startQuiz = () => {
+var startQuiz = function() {
     // confirm if there are instruction and start button to remove
     var confirmInstruction = document.getElementById("instruction");
     var confirmStartBtn = document.getElementById("start-btn");
-    if(confirmInstruction && confirmStartBtn) {
+    if (confirmInstruction && confirmStartBtn) {
         countdown();
+
         instructionEl.remove();
         startEl.remove();
-        
     }
+
     // set up question
     setQuestion(questionNo);
     // set up answers
@@ -263,11 +238,12 @@ var saveFinalScore = function() {
         scoreList.sort((a, b) => b.score - a.score)
         localStorage.setItem("scoreList", JSON.stringify(scoreList));
     }
-    showHighScore();
+    
+    showHighScores();
 }
 
 // show ranked high scores from the first screen and with submit button
-var showHighScore = function() {
+var showHighScores = function() {
     mainEl.className = "main-style";
     // check if any scores stored in the storage and set them to score list
     // if not, set blank array to score list
@@ -289,6 +265,7 @@ var showHighScore = function() {
         instructionEl.remove();
         startEl.remove();
     }
+    
     // if middle of the quiz, remove answers list
     removeAnswersList();
 
@@ -299,13 +276,13 @@ var showHighScore = function() {
 
     // replace title area with "high scores"
     titleArea.innerHTML = "High scores";
-
+    
     // create ordered list element to hold score list items
     var highScoresListEl = document.createElement("ol");
     highScoresListEl.className = "high-scores-list";
-
-     // create list items until the end of the score list
-     for (var i = 0; i < scoreList.length; i++) {
+    
+    // create list items until the end of the score list
+    for (var i = 0; i < scoreList.length; i++) {
         var savedInitial = scoreList[i].userInitial;
         var savedScore = scoreList[i].score;
 
@@ -332,7 +309,6 @@ var showHighScore = function() {
     buttonWrapperEl.appendChild(clearScoresBtn);
 
     sectionAreaEl.appendChild(buttonWrapperEl);
-    
 }
 
 // clear high scores in localStorage and remove li elements
